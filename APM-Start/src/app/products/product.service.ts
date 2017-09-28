@@ -17,9 +17,17 @@ export class ProductService {
 
   getProducts(): Observable<IProduct[]> {
     return this.http.get<IProduct[]>(this.productUrl)
-      .do(data => console.log(JSON.stringify(data)))
       .catch(this.handleError);
   }
+
+  // getProduct(id: number): Observable<IProduct> {
+  //   this.http.get<IProduct[]>(this.productUrl)
+  //   .do(data => {
+  //     let myProduct = data.filter((product: IProduct) => product.productId == id);
+  //     return myProduct;
+  //   })
+  //   .catch(this.handleError);
+  // }
 
   private handleError(err: HttpErrorResponse) {
     console.log(err.message);
