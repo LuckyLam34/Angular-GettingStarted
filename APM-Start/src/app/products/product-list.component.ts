@@ -14,6 +14,7 @@ export class ProductListComponent implements OnInit {
   imageMargin: number = 2;
   showImage: boolean = true;
   filteredProducts: IProduct[];
+  errorMesage: string;
 
   _listFilter: string;
   set listFilter(value: string) {
@@ -43,8 +44,13 @@ export class ProductListComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
-    this.filteredProducts = this.products;
+    this.productService.getProducts()
+      .subscribe(data => {
+        this.products = data;
+        this.filteredProducts = this.products;
+      },
+      error => this.errorMesage = <any>error // this is called casting
+      );
   };
 
   onRatingClicked(message: string): void {
