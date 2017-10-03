@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/catch";
 import "rxjs/add/operator/do";
+import "rxjs/add/operator/map";
 import { HttpErrorResponse } from "@angular/common/http";
 
 @Injectable()
@@ -20,14 +21,10 @@ export class ProductService {
       .catch(this.handleError);
   }
 
-  // getProduct(id: number): Observable<IProduct> {
-  //   this.http.get<IProduct[]>(this.productUrl)
-  //   .do(data => {
-  //     let myProduct = data.filter((product: IProduct) => product.productId == id);
-  //     return myProduct;
-  //   })
-  //   .catch(this.handleError);
-  // }
+  getProduct(id): Observable<IProduct> {
+    return this.getProducts()
+      .map((products: IProduct[]) => products.find(p => p.productId === id));
+  }
 
   private handleError(err: HttpErrorResponse) {
     console.log(err.message);

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product';
 import { ActivatedRoute, Router } from "@angular/router";
+import { ProductService } from './product.service';
 
 @Component({
   // selector: 'pm-product-detail', Dont need this because we will display this component using routing, not directives
@@ -13,13 +14,15 @@ export class ProductDetailComponent implements OnInit {
   product: IProduct;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private router: Router
+              private router: Router,
+              private productService: ProductService
   ) { }
 
   ngOnInit() {
     let id = +this.activatedRoute.snapshot.paramMap.get('id');
 
-    console.log(id);
+    this.productService.getProduct(id)
+                        .subscribe(data => this.product = data);
   }
 
   onBack():void {
